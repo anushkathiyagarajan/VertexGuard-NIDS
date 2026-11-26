@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>VertexGuard IDS</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="landing">
+
+<img src="{{ url_for('static', filename='images/login.jpg') }}" width="150">
+
+<h1>VertexGuard</h1>
+
+<p>Network Intrusion Detection System</p>
+
+<div class="upload-box">
+
+<form action="/predict" method="POST" enctype="multipart/form-data">
+
+<input type="file" name="file" required>
+
+<br><br>
+
+<button class="btn">Start Detection</button>
+
+</form>
+
+</div>
+
+</div>
+
+</body>
+</html>

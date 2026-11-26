@@ -1,0 +1,35 @@
+# Python virtual environments
+venv/
+.venv/
+env/
+
+# Python cache and build artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
+
+# Local environment variables and credentials
+.env
+.env.*
+!.env.example
+
+# Generated logs and reports
+/logs/
+
+# Local dataset files
+/dataset/
+
+# Local editor and operating-system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini

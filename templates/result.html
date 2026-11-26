@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>VertexGuard IDS Dashboard</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<div class="main">
+
+<!-- Header with Shield Logo -->
+
+<div class="header">
+
+<svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+<path d="M12 2L4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3z"/>
+</svg>
+
+<h1>VertexGuard Intrusion Detection Dashboard</h1>
+
+</div>
+
+<br>
+
+<div style="margin-bottom:20px; text-align:center;">
+
+<a href="/index">
+<button class="btn">Analyze Another Dataset</button>
+</a>
+
+<a href="/download_report">
+<button class="btn">Download Security Report</button>
+</a>
+
+</div>
+
+<br>
+
+<!-- Traffic Cards -->
+
+<div class="cards">
+
+<div class="card total">
+<h3>Total Traffic</h3>
+<p>{{ total }}</p>
+</div>
+
+<div class="card normal">
+<h3>Normal Traffic</h3>
+<p>{{ normal }}</p>
+</div>
+
+<div class="card attack">
+<h3>Attack Traffic</h3>
+<p>{{ attacks }}</p>
+</div>
+
+</div>
+
+<br>
+
+<!-- Traffic Distribution -->
+
+<h3>Traffic Distribution</h3>
+
+<div class="chart-container">
+<canvas id="trafficChart"></canvas>
+</div>
+
+<br>
+
+<!-- Feature Importance -->
+
+<h3>Feature Importance</h3>
+
+<div class="chart-container">
+<canvas id="featureChart"></canvas>
+</div>
+
+<br>
+
+<!-- Prediction Confidence -->
+
+<h3>Prediction Confidence</h3>
+
+<div class="chart-container">
+<canvas id="confidenceChart"></canvas>
+</div>
+
+<br>
+
+<!-- Detection Logs -->
+
+<h3>Detection Logs</h3>
+
+<div class="logs">
+
+{% for log in logs %}
+
+<p>
+
+<strong>Row {{ log.row }}</strong><br>
+
+Prediction =
+<span style="color:{% if log.prediction=='Attack' %}red{% else %}lightgreen{% endif %}">
+{{ log.prediction }}
+</span><br>
+
+Attack Type = {{ log.type }}<br>
+
+Confidence = {{ log.confidence }}%
+
+</p>
+
+<hr>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+<!-- Charts Script -->
+
+<script src="{{ url_for('static', filename='js/chart.js') }}"></script>
+
+<script>
+
+drawTrafficChart({{ normal }}, {{ attacks }});
+
+drawFeatureChart(
+{{ features | default([]) | tojson }},
+{{ importance | default([]) | tojson }}
+);
+
+drawConfidenceChart(
+{{ normal_conf }},
+{{ attack_conf }}
+);
+
+</script>
+
+</body>
+</html>
